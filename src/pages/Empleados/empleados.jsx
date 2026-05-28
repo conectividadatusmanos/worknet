@@ -62,29 +62,30 @@ export default function Empleados() {
   ];
 
   return (
-    <div className="flex-grow bg-slate-900 py-12 px-6">
+    // CAMBIO: Aquí pusimos bg-slate-50 igual que tu inicio
+    <div className="flex-grow bg-slate-50 py-12 px-6 min-h-screen">
       <div className="max-w-7xl mx-auto">
         
-        {/* Encabezado de la página */}
+        {/* Encabezado de la página (Adaptado a textos oscuros para que se lea bien) */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
+          <h2 className="text-4xl font-extrabold tracking-tight text-[#0D3A6A] sm:text-5xl">
             Talento Disponible en <span className="text-[#22C55E]">WORK</span><span className="text-[#1677FF]">NET</span>
           </h2>
-          <p className="mt-4 text-xl text-slate-400 max-w-2xl mx-auto">
+          <p className="mt-4 text-xl text-slate-600 max-w-2xl mx-auto">
             Explora los perfiles de los profesionales mejor calificados listos para integrarse a tu equipo de trabajo.
           </p>
         </div>
 
-        {/* CONTENEDOR EN REJILLA (GRID) */}
-        {/* md:grid-cols-3 significa 3 columnas en PC, lg:grid-cols-4 significa 4 columnas en pantallas grandes */}
+        {/* CONTENEDOR EN REJILLA (Manteniendo tus 4 columnas originales) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           
           {listaEmpleados.map((empleado) => (
             <div 
               key={empleado.id} 
-              className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6 text-center shadow-lg transition-all duration-300 transform hover:-translate-y-1.5 hover:shadow-[0_10px_25px_rgba(22,119,255,0.15)] group"
+              // Mantenemos tus tarjetas oscuras traslúcidas que contrastan genial con el fondo clarito
+              className="bg-slate-850 bg-slate-800/90 border border-slate-700/50 rounded-2xl p-6 text-center shadow-lg transition-all duration-300 transform hover:-translate-y-1.5 hover:shadow-[0_10px_25px_rgba(22,119,255,0.15)] group"
             >
-              {/* Contenedor de la Foto con borde decorativo que brilla al pasar el mouse */}
+              {/* Tu contenedor de la foto original con borde gradiente */}
               <div className="relative w-28 h-28 mx-auto mb-4 rounded-full p-1 bg-gradient-to-tr from-slate-700 to-slate-600 group-hover:from-[#1677FF] group-hover:to-[#22C55E] transition-all duration-300">
                 <img
                   src={empleado.foto}
@@ -108,7 +109,7 @@ export default function Empleados() {
                 {empleado.tecnologia}
               </p>
 
-              {/* Botón de acción */}
+              {/* Tu botón original gris que pasa a azul */}
               <div className="mt-5">
                 <button className="w-full bg-slate-700 hover:bg-[#1677FF] text-white font-bold text-sm py-2.5 px-4 rounded-xl transition-all duration-300 shadow-md">
                   Ver Perfil

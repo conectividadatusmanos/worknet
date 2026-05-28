@@ -65,11 +65,11 @@ export default function Empleados() {
     // CAMBIO: Aquí pusimos bg-slate-50 igual que tu inicio
     <div className="flex-grow bg-slate-50 py-12 px-6 min-h-screen">
       <div className="max-w-7xl mx-auto">
-        
+
         {/* Encabezado de la página (Adaptado a textos oscuros para que se lea bien) */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-extrabold tracking-tight text-[#0D3A6A] sm:text-5xl">
-            Talento Disponible en <span className="text-[#22C55E]">WORK</span><span className="text-[#1677FF]">NET</span>
+          <h2 className="text-4xl font-extrabold tracking-tight text-[#0f172a] sm:text-5xl">
+            Talento disponible en <span className="text-[#0f172a]">WORK</span><span className="text-[#22C55E]">NET</span>
           </h2>
           <p className="mt-4 text-xl text-slate-600 max-w-2xl mx-auto">
             Explora los perfiles de los profesionales mejor calificados listos para integrarse a tu equipo de trabajo.
@@ -78,10 +78,10 @@ export default function Empleados() {
 
         {/* CONTENEDOR EN REJILLA (Manteniendo tus 4 columnas originales) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          
+
           {listaEmpleados.map((empleado) => (
-            <div 
-              key={empleado.id} 
+            <div
+              key={empleado.id}
               // Mantenemos tus tarjetas oscuras traslúcidas que contrastan genial con el fondo clarito
               className="bg-slate-850 bg-slate-800/90 border border-slate-700/50 rounded-2xl p-6 text-center shadow-lg transition-all duration-300 transform hover:-translate-y-1.5 hover:shadow-[0_10px_25px_rgba(22,119,255,0.15)] group"
             >

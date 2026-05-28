@@ -1,101 +1,296 @@
-    import React, { useState } from 'react';
+import React, { useState } from 'react';
 
 export default function Ingresar() {
+  // Estado para saber si muestra 'login' o 'registro'
+  const [vista, setVista] = useState('login');
+
+  // Estados para el Login
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  // Estados para el Registro (Los datos exactos que pediste)
+  const [registroData, setRegistroData] = useState({
+    usuario: '',
+    clave: '',
+    nombre: '',
+    apellido: '',
+    telefono: '',
+    correo_electronico: '',
+    direccion: '',
+    ciudad: '',
+    fecha_nacimiento: ''
+  });
+
+  // Manejador del cambio de inputs en registro
+  const handleRegistroChange = (e) => {
+    setRegistroData({
+      ...registroData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleLoginSubmit = (e) => {
     e.preventDefault();
-    // Aquí manejarás la lógica de autenticación más adelante
     console.log('Iniciando sesión con:', { email, password });
   };
 
+  const handleRegistroSubmit = (e) => {
+    e.preventDefault();
+    console.log('Registrando usuario con datos:', registroData);
+  };
+
   return (
-    <div className="flex flex-1 items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md bg-slate-800 border border-slate-700/50 rounded-2xl p-8 shadow-xl">
-        
-        {/* Encabezado de la tarjeta */}
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-extrabold tracking-tight text-white">
-            ¡Bienvenido de nuevo!
-          </h2>
-          <p className="text-sm text-slate-400 mt-2">
-            Ingresa tus credenciales para acceder a Worknet
-          </p>
-        </div>
-
-        {/* Formulario */}
-        <form onSubmit={handleSubmit} className="space-y-6">
-          
-          {/* Input de Email */}
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">
-              Correo Electrónico
-            </label>
-            <input
-              id="email"
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="nombre@empresa.com"
-              className="w-full px-4 py-3 bg-slate-900/50 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-            />
+    <div className="flex flex-1 items-center justify-center bg-slate-50 px-4 py-12 min-h-screen transition-all duration-300">
+      
+      {/* VISTA 1: INICIAR SESIÓN */}
+      {vista === 'login' && (
+        <div className="w-full max-w-md bg-white border border-slate-200/60 rounded-2xl p-8 shadow-[0_4px_25px_rgba(0,0,0,0.04)] animate-fadeIn">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-extrabold tracking-tight text-[#0f172a]">
+              ¡Bienvenido de nuevo!
+            </h2>
+            <p className="text-sm text-slate-600 mt-2">
+              Ingresa tus credenciales para acceder a <span className="text-[#0f172a] font-bold">WORK</span><span className="text-[#22C55E] font-bold">NET</span>
+            </p>
           </div>
 
-          {/* Input de Contraseña */}
-          <div>
-            <div className="flex justify-between items-center mb-2">
-              <label htmlFor="password" className="text-sm font-medium text-slate-300">
-                Contraseña
+          <form onSubmit={handleLoginSubmit} className="space-y-6">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
+                Correo Electrónico
               </label>
-              <a href="#" className="text-xs text-blue-400 hover:underline">
-                ¿La olvidaste?
-              </a>
+              <input
+                id="email"
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="nombre@empresa.com"
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1677FF] focus:border-transparent transition-all"
+              />
             </div>
-            <input
-              id="password"
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className="w-full px-4 py-3 bg-slate-900/50 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-            />
+
+            <div>
+              <div className="flex justify-between items-center mb-2">
+                <label htmlFor="password" className="text-sm font-medium text-slate-700">
+                  Contraseña
+                </label>
+                <a href="#" className="text-xs text-[#1677FF] hover:underline font-medium">
+                  ¿La olvidaste?
+                </a>
+              </div>
+              <input
+                id="password"
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1677FF] focus:border-transparent transition-all"
+              />
+            </div>
+
+            <div className="flex items-center">
+              <input
+                id="remember-me"
+                type="checkbox"
+                className="h-4 w-4 bg-white border-slate-300 rounded text-[#1677FF] focus:ring-[#1677FF]/20"
+              />
+              <label htmlFor="remember-me" className="ml-2 block text-sm text-slate-600 select-none">
+                Recordar mi sesión
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-3 px-4 bg-[#1677FF] hover:bg-[#0b5ed7] text-white font-bold rounded-xl shadow-lg shadow-blue-600/10 transition-all"
+            >
+              Iniciar Sesión
+            </button>
+          </form>
+
+          <div className="text-center mt-6">
+            <p className="text-sm text-slate-600">
+              ¿No tienes una cuenta?{' '}
+              <button 
+                onClick={() => setVista('registro')} 
+                className="text-[#1677FF] hover:underline font-bold focus:outline-none"
+              >
+                Regístrate aquí
+              </button>
+            </p>
           </div>
-
-          {/* Recordarme */}
-          <div className="flex items-center">
-            <input
-              id="remember-me"
-              type="checkbox"
-              className="h-4 w-4 bg-slate-900 border-slate-700 rounded text-blue-500 focus:ring-blue-500/20 text-slate-900"
-            />
-            <label htmlFor="remember-me" className="ml-2 block text-sm text-slate-400 select-none">
-              Recordar mi sesión
-            </label>
-          </div>
-
-          {/* Botón de Enviar */}
-          <button
-            type="submit"
-            className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-semibold rounded-xl shadow-lg shadow-blue-600/20 transition-all duration-200 transform active:scale-[0.98]"
-          >
-            Iniciar Sesión
-          </button>
-        </form>
-
-        {/* Registro */}
-        <div className="text-center mt-6">
-          <p className="text-sm text-slate-400">
-            ¿No tienes una cuenta?{' '}
-            <a href="#" className="text-blue-400 hover:underline font-medium">
-              Regístrate aquí
-            </a>
-          </p>
         </div>
+      )}
 
-      </div>
+      {/* VISTA 2: FORMULARIO DE REGISTRO (CON TUS DATOS REQUERIDOS) */}
+      {vista === 'registro' && (
+        <div className="w-full max-w-2xl bg-white border border-slate-200/60 rounded-2xl p-8 shadow-[0_4px_25px_rgba(0,0,0,0.04)] animate-fadeIn">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-extrabold tracking-tight text-[#0f172a]">
+              Crear cuenta en <span className="text-[#0f172a]">WORK</span><span className="text-[#22C55E]">NET</span>
+            </h2>
+            <p className="text-sm text-slate-600 mt-2">
+              Completa el formulario para registrarte en nuestra plataforma institucional.
+            </p>
+          </div>
+
+          <form onSubmit={handleRegistroSubmit} className="space-y-5">
+            
+            {/* Grid de 2 Columnas para optimizar espacio */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              
+              {/* Usuario */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Usuario</label>
+                <input
+                  type="text"
+                  name="usuario"
+                  required
+                  value={registroData.usuario}
+                  onChange={handleRegistroChange}
+                  placeholder="ej. juanito99"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#1677FF]"
+                />
+              </div>
+
+              {/* Clave */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Contraseña (Clave)</label>
+                <input
+                  type="password"
+                  name="clave"
+                  required
+                  value={registroData.clave}
+                  onChange={handleRegistroChange}
+                  placeholder="••••••••"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#1677FF]"
+                />
+              </div>
+
+              {/* Nombre */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Nombre</label>
+                <input
+                  type="text"
+                  name="nombre"
+                  required
+                  value={registroData.nombre}
+                  onChange={handleRegistroChange}
+                  placeholder="Tu nombre"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#1677FF]"
+                />
+              </div>
+
+              {/* Apellido */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Apellido</label>
+                <input
+                  type="text"
+                  name="apellido"
+                  required
+                  value={registroData.apellido}
+                  onChange={handleRegistroChange}
+                  placeholder="Tu apellido"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#1677FF]"
+                />
+              </div>
+
+              {/* Correo Electrónico */}
+              <div className="sm:col-span-2">
+                <label className="block text-sm font-medium text-slate-700 mb-1">Correo Electrónico</label>
+                <input
+                  type="email"
+                  name="correo_electronico"
+                  required
+                  value={registroData.correo_electronico}
+                  onChange={handleRegistroChange}
+                  placeholder="correo@ejemplo.com"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#1677FF]"
+                />
+              </div>
+
+              {/* Teléfono */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Teléfono</label>
+                <input
+                  type="tel"
+                  name="telefono"
+                  required
+                  value={registroData.telefono}
+                  onChange={handleRegistroChange}
+                  placeholder="300 123 4567"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#1677FF]"
+                />
+              </div>
+
+              {/* Fecha de Nacimiento */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Fecha de Nacimiento</label>
+                <input
+                  type="date"
+                  name="fecha_nacimiento"
+                  required
+                  value={registroData.fecha_nacimiento}
+                  onChange={handleRegistroChange}
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#1677FF]"
+                />
+              </div>
+
+              {/* Dirección */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Dirección</label>
+                <input
+                  type="text"
+                  name="direccion"
+                  required
+                  value={registroData.direccion}
+                  onChange={handleRegistroChange}
+                  placeholder="Calle 12 # 34-56"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#1677FF]"
+                />
+              </div>
+
+              {/* Ciudad */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Ciudad</label>
+                <input
+                  type="text"
+                  name="ciudad"
+                  required
+                  value={registroData.ciudad}
+                  onChange={handleRegistroChange}
+                  placeholder="Ej. Bogotá"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#1677FF]"
+                />
+              </div>
+
+            </div>
+
+            {/* Botón Registrar */}
+            <button
+              type="submit"
+              className="w-full mt-2 py-3 px-4 bg-[#22C55E] hover:bg-[#19a14b] text-white font-bold rounded-xl shadow-lg shadow-green-600/10 transition-all"
+            >
+              Registrarse Ahora
+            </button>
+          </form>
+
+          {/* Regresar al Login */}
+          <div className="text-center mt-6">
+            <p className="text-sm text-slate-600">
+              ¿Ya tienes una cuenta?{' '}
+              <button 
+                onClick={() => setVista('login')} 
+                className="text-[#1677FF] hover:underline font-bold focus:outline-none"
+              >
+                Inicia sesión aquí
+              </button>
+            </p>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

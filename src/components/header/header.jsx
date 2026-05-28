@@ -23,7 +23,7 @@ export default function Header() {
             className="h-11 w-auto object-contain" 
           />
           <span className="text-2xl font-black tracking-wider text-[#0D1B3D] font-sans">
-            WORk<span className="text-[#22C55E]">NET</span>
+            WORK<span className="text-[#22C55E]">NET</span>
           </span>
         </Link>
 

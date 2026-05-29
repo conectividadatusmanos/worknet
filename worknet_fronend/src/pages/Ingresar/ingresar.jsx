@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 export default function Ingresar() {
   // Estado para saber si muestra 'login' o 'registro'
@@ -8,7 +9,7 @@ export default function Ingresar() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // Estados para el Registro (Los datos exactos que pediste)
+  // Estados para el Registro (Unificado y limpio)
   const [registroData, setRegistroData] = useState({
     usuario: '',
     clave: '',
@@ -20,6 +21,9 @@ export default function Ingresar() {
     ciudad: '',
     fecha_nacimiento: ''
   });
+
+  // Estado para manejar las alertas visuales (Éxito o Error)
+  const [mensaje, setMensaje] = useState({ texto: '', tipo: '' });
 
   // Manejador del cambio de inputs en registro
   const handleRegistroChange = (e) => {
@@ -34,14 +38,46 @@ export default function Ingresar() {
     console.log('Iniciando sesión con:', { email, password });
   };
 
-  const handleRegistroSubmit = (e) => {
+  const handleRegistroSubmit = async (e) => {
     e.preventDefault();
-    console.log('Registrando usuario con datos:', registroData);
+    setMensaje({ texto: '', tipo: '' }); // Limpiar mensajes previos
+
+    try {
+      // Petición POST al puerto 8000 donde corre tu API de Laravel
+      const response = await axios.post('http://127.0.0.1:8000/api/usuarios', registroData);
+
+      // Si todo sale bien
+      setMensaje({ texto: response.data.mensaje, tipo: 'exito' });
+
+      // Limpiar el formulario tras registrar con éxito
+      setRegistroData({
+        usuario: '', clave: '', nombre: '', apellido: '',
+        telefono: '', correo_electronico: '', direccion: '', ciudad: '', fecha_nacimiento: ''
+      });
+
+    } catch (error) {
+      console.error(error);
+      
+      // Capturar el error estructurado de validación de Laravel
+      let errorServer = 'Error en el servidor al registrar';
+      
+      if (error.response?.data?.errors) {
+        // Si Laravel dice que el usuario o correo ya existen, tomamos ese mensaje
+        const primerosErrores = Object.values(error.response.data.errors);
+        if (primerosErrores.length > 0) {
+          errorServer = primerosErrores[0][0]; 
+        }
+      } else if (error.response?.data?.message) {
+        errorServer = error.response.data.message;
+      }
+
+      setMensaje({ texto: errorServer, tipo: 'error' });
+    }
   };
 
   return (
     <div className="flex flex-1 items-center justify-center bg-slate-50 px-4 py-12 min-h-screen transition-all duration-300">
-      
+
       {/* VISTA 1: INICIAR SESIÓN */}
       {vista === 'login' && (
         <div className="w-full max-w-md bg-white border border-slate-200/60 rounded-2xl p-8 shadow-[0_4px_25px_rgba(0,0,0,0.04)] animate-fadeIn">
@@ -112,8 +148,8 @@ export default function Ingresar() {
           <div className="text-center mt-6">
             <p className="text-sm text-slate-600">
               ¿No tienes una cuenta?{' '}
-              <button 
-                onClick={() => setVista('registro')} 
+              <button
+                onClick={() => setVista('registro')}
                 className="text-[#1677FF] hover:underline font-bold focus:outline-none"
               >
                 Regístrate aquí
@@ -123,7 +159,7 @@ export default function Ingresar() {
         </div>
       )}
 
-      {/* VISTA 2: FORMULARIO DE REGISTRO (CON TUS DATOS REQUERIDOS) */}
+      {/* VISTA 2: FORMULARIO DE REGISTRO */}
       {vista === 'registro' && (
         <div className="w-full max-w-2xl bg-white border border-slate-200/60 rounded-2xl p-8 shadow-[0_4px_25px_rgba(0,0,0,0.04)] animate-fadeIn">
           <div className="text-center mb-8">
@@ -135,11 +171,20 @@ export default function Ingresar() {
             </p>
           </div>
 
+          {/* Alerta de Mensajes dinámicos */}
+          {mensaje.texto && (
+            <div className={`p-4 mb-4 text-sm rounded-xl font-medium text-center border ${
+              mensaje.tipo === 'exito' 
+                ? 'bg-green-50 text-green-600 border-green-200' 
+                : 'bg-red-50 text-red-600 border-red-200'
+            }`}>
+              {mensaje.texto}
+            </div>
+          )}
+
           <form onSubmit={handleRegistroSubmit} className="space-y-5">
-            
-            {/* Grid de 2 Columnas para optimizar espacio */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              
+
               {/* Usuario */}
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Usuario</label>
@@ -280,8 +325,8 @@ export default function Ingresar() {
           <div className="text-center mt-6">
             <p className="text-sm text-slate-600">
               ¿Ya tienes una cuenta?{' '}
-              <button 
-                onClick={() => setVista('login')} 
+              <button
+                onClick={() => setVista('login')}
                 className="text-[#1677FF] hover:underline font-bold focus:outline-none"
               >
                 Inicia sesión aquí

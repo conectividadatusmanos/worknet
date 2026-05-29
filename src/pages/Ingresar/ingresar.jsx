@@ -170,7 +170,7 @@ export default function Ingresar() {
 
               {/* Nombre */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Nombre</label>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Nombres</label>
                 <input
                   type="text"
                   name="nombre"
@@ -184,7 +184,7 @@ export default function Ingresar() {
 
               {/* Apellido */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Apellido</label>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Apellidos</label>
                 <input
                   type="text"
                   name="apellido"

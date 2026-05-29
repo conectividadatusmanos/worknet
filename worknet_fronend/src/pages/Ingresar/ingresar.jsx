@@ -76,11 +76,11 @@ export default function Ingresar() {
   };
 
   return (
-    <div className="flex flex-1 items-center justify-center bg-slate-50 px-4 py-12 min-h-screen transition-all duration-300">
+    <div className="flex flex-1 items-center justify-center bg-slate-50 px-100 py-30 min-h-screen transition-all duration-300">
 
       {/* VISTA 1: INICIAR SESIÓN */}
       {vista === 'login' && (
-        <div className="w-full max-w-md bg-white border border-slate-200/60 rounded-2xl p-8 shadow-[0_4px_25px_rgba(0,0,0,0.04)] animate-fadeIn">
+        <div className="w-full max-w-md bg-white border border-slate-200/100 rounded-2xl p-8 shadow-[0_4px_25px_rgba(0,0,0,0.04)] animate-fadeIn">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-extrabold tracking-tight text-[#0f172a]">
               ¡Bienvenido de nuevo!

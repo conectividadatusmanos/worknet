@@ -94,7 +94,7 @@ export default function Header() {
           <Link to="/contactos" onClick={() => setIsOpen(false)} className="text-slate-600 hover:text-[#1677FF] text-lg font-semibold py-2 border-b border-slate-100 transition-colors">
             Contactos
           </Link>
-          <Link to="/login" onClick={() => setIsOpen(false)} className="text-slate-600 hover:text-[#0D1B3D] text-lg font-semibold py-2 transition-colors">
+          <Link to="/ingresar" onClick={() => setIsOpen(false)} className="text-slate-600 hover:text-[#0D1B3D] text-lg font-semibold py-2 transition-colors">
             Ingresar
           </Link>
           <Link to="/publicar" onClick={() => setIsOpen(false)} className="bg-[#1677FF] hover:bg-[#115dd3] text-white px-4 py-3 rounded-xl font-bold text-center shadow-md transition-all">

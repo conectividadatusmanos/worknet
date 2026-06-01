@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export default function Ingresar() {
   // Estado para saber si muestra 'login' o 'registro'
-  const [vista, setVista] = useState('login');
+  const [vista, setVista] = useState('ingresar');
 
   // Estados para el Login
   const [email, setEmail] = useState('');
@@ -57,15 +57,15 @@ export default function Ingresar() {
 
     } catch (error) {
       console.error(error);
-      
+
       // Capturar el error estructurado de validación de Laravel
       let errorServer = 'Error en el servidor al registrar';
-      
+
       if (error.response?.data?.errors) {
         // Si Laravel dice que el usuario o correo ya existen, tomamos ese mensaje
         const primerosErrores = Object.values(error.response.data.errors);
         if (primerosErrores.length > 0) {
-          errorServer = primerosErrores[0][0]; 
+          errorServer = primerosErrores[0][0];
         }
       } else if (error.response?.data?.message) {
         errorServer = error.response.data.message;
@@ -76,10 +76,11 @@ export default function Ingresar() {
   };
 
   return (
-    <div className="flex flex-1 items-center justify-center bg-slate-50 px-100 py-30 min-h-screen transition-all duration-300">
+
+    <div className="flex flex-1 items-center justify-center bg-slate-50 px-4 py-12 sm:px-6 lg:px-8 min-h-screen transition-all duration-300">
 
       {/* VISTA 1: INICIAR SESIÓN */}
-      {vista === 'login' && (
+      {vista === 'ingresar' && (
         <div className="w-full max-w-md bg-white border border-slate-200/100 rounded-2xl p-8 shadow-[0_4px_25px_rgba(0,0,0,0.04)] animate-fadeIn">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-extrabold tracking-tight text-[#0f172a]">
@@ -173,11 +174,10 @@ export default function Ingresar() {
 
           {/* Alerta de Mensajes dinámicos */}
           {mensaje.texto && (
-            <div className={`p-4 mb-4 text-sm rounded-xl font-medium text-center border ${
-              mensaje.tipo === 'exito' 
-                ? 'bg-green-50 text-green-600 border-green-200' 
+            <div className={`p-4 mb-4 text-sm rounded-xl font-medium text-center border ${mensaje.tipo === 'exito'
+                ? 'bg-green-50 text-green-600 border-green-200'
                 : 'bg-red-50 text-red-600 border-red-200'
-            }`}>
+              }`}>
               {mensaje.texto}
             </div>
           )}
@@ -326,7 +326,7 @@ export default function Ingresar() {
             <p className="text-sm text-slate-600">
               ¿Ya tienes una cuenta?{' '}
               <button
-                onClick={() => setVista('login')}
+                onClick={() => setVista('ingresar')}
                 className="text-[#1677FF] hover:underline font-bold focus:outline-none"
               >
                 Inicia sesión aquí

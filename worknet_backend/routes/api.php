@@ -1,7 +1,9 @@
 <?php
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\UsuariosController;
+use Illuminate\Support\Facades\Route;
 
-Route::get('/documentos', [DocumentoController::class, 'index']);
+// Ruta para listar (Metodo GET)
 Route::get('/usuarios', [UsuariosController::class, 'index']);
+
+// Ruta para registrar desde tu formulario (Metodo POST) -> Esta es la que usa tu Axios
+Route::post('/usuarios', [UsuariosController::class, 'store']);

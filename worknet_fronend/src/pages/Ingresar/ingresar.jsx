@@ -9,14 +9,13 @@ export default function Ingresar() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // Estados para el Registro (Unificado y limpio)
+  // ESTADOS CORREGIDOS: Coinciden exactamente con las columnas y llaves de Laravel
   const [registroData, setRegistroData] = useState({
-    usuario: '',
-    clave: '',
-    nombre: '',
-    apellido: '',
+    correo: '',
+    contrasena: '',
+    primer_nombre: '',
+    primer_apellido: '',
     telefono: '',
-    correo_electronico: '',
     direccion: '',
     ciudad: '',
     fecha_nacimiento: ''
@@ -51,8 +50,8 @@ export default function Ingresar() {
 
       // Limpiar el formulario tras registrar con éxito
       setRegistroData({
-        usuario: '', clave: '', nombre: '', apellido: '',
-        telefono: '', correo_electronico: '', direccion: '', ciudad: '', fecha_nacimiento: ''
+        correo: '', contrasena: '', primer_nombre: '', primer_apellido: '',
+        telefono: '', direccion: '', ciudad: '', fecha_nacimiento: ''
       });
 
     } catch (error) {
@@ -62,7 +61,6 @@ export default function Ingresar() {
       let errorServer = 'Error en el servidor al registrar';
 
       if (error.response?.data?.errors) {
-        // Si Laravel dice que el usuario o correo ya existen, tomamos ese mensaje
         const primerosErrores = Object.values(error.response.data.errors);
         if (primerosErrores.length > 0) {
           errorServer = primerosErrores[0][0];
@@ -76,7 +74,6 @@ export default function Ingresar() {
   };
 
   return (
-
     <div className="flex flex-1 items-center justify-center bg-slate-50 px-4 py-12 sm:px-6 lg:px-8 min-h-screen transition-all duration-300">
 
       {/* VISTA 1: INICIAR SESIÓN */}
@@ -172,7 +169,6 @@ export default function Ingresar() {
             </p>
           </div>
 
-          {/* Alerta de Mensajes dinámicos */}
           {mensaje.texto && (
             <div className={`p-4 mb-4 text-sm rounded-xl font-medium text-center border ${mensaje.tipo === 'exito'
                 ? 'bg-green-50 text-green-600 border-green-200'
@@ -185,72 +181,58 @@ export default function Ingresar() {
           <form onSubmit={handleRegistroSubmit} className="space-y-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-              {/* Usuario */}
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Usuario</label>
+              {/* Correo Electrónico (Reemplaza a 'usuario' y se mapea con la tabla usuarios) */}
+              <div className="sm:col-span-2">
+                <label className="block text-sm font-medium text-slate-700 mb-1">Correo Electrónico</label>
                 <input
-                  type="text"
-                  name="usuario"
+                  type="email"
+                  name="correo"
                   required
-                  value={registroData.usuario}
+                  value={registroData.correo}
                   onChange={handleRegistroChange}
-                  placeholder="ej. juanito99"
+                  placeholder="correo@ejemplo.com"
                   className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#1677FF]"
                 />
               </div>
 
-              {/* Clave */}
-              <div>
+              {/* Contrasena */}
+              <div className="sm:col-span-2">
                 <label className="block text-sm font-medium text-slate-700 mb-1">Contraseña (Clave)</label>
                 <input
                   type="password"
-                  name="clave"
+                  name="contrasena"
                   required
-                  value={registroData.clave}
+                  value={registroData.contrasena}
                   onChange={handleRegistroChange}
                   placeholder="••••••••"
                   className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#1677FF]"
                 />
               </div>
 
-              {/* Nombre */}
+              {/* Primer Nombre */}
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Nombres</label>
                 <input
                   type="text"
-                  name="nombre"
+                  name="primer_nombre"
                   required
-                  value={registroData.nombre}
+                  value={registroData.primer_nombre}
                   onChange={handleRegistroChange}
                   placeholder="Tu nombre"
                   className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#1677FF]"
                 />
               </div>
 
-              {/* Apellido */}
+              {/* Primer Apellido */}
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Apellidos</label>
                 <input
                   type="text"
-                  name="apellido"
+                  name="primer_apellido"
                   required
-                  value={registroData.apellido}
+                  value={registroData.primer_apellido}
                   onChange={handleRegistroChange}
                   placeholder="Tu apellido"
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#1677FF]"
-                />
-              </div>
-
-              {/* Correo Electrónico */}
-              <div className="sm:col-span-2">
-                <label className="block text-sm font-medium text-slate-700 mb-1">Correo Electrónico</label>
-                <input
-                  type="email"
-                  name="correo_electronico"
-                  required
-                  value={registroData.correo_electronico}
-                  onChange={handleRegistroChange}
-                  placeholder="correo@ejemplo.com"
                   className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#1677FF]"
                 />
               </div>
@@ -312,7 +294,6 @@ export default function Ingresar() {
 
             </div>
 
-            {/* Botón Registrar */}
             <button
               type="submit"
               className="w-full mt-2 py-3 px-4 bg-[#22C55E] hover:bg-[#19a14b] text-white font-bold rounded-xl shadow-lg shadow-green-600/10 transition-all"
@@ -321,7 +302,6 @@ export default function Ingresar() {
             </button>
           </form>
 
-          {/* Regresar al Login */}
           <div className="text-center mt-6">
             <p className="text-sm text-slate-600">
               ¿Ya tienes una cuenta?{' '}

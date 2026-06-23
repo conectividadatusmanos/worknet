@@ -12,7 +12,7 @@ class Perfilescandidatos extends Model {
     'direccion', 
     'ciudad', 
     'fecha_nacimiento',
-    'profesion_id', // Opcional en el primer paso si lo pides después
+    'profesion_id',
     'descripcion_experiencia'
 ];
     public $timestamps = false;
